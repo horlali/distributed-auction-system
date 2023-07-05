@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "auction-system"
+version = "0.1.0"
+description = ""
+authors = ["horlali <gideon.ahiadzi@gmail.com>"]
+readme = "README.md"
+packages = [{include = "auction_system"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
