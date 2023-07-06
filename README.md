@@ -8,13 +8,13 @@ COURSE WORK 2  - Distributed Auction System
 
 | Student                 | ID Number                 |
 | :---------------------- | :------------------------ |
-| ABRAHAM TAMATEY         | 110*****                  |
-| EMMANUEL PEASAH-DARKWAH | 110*****                  |
-| GIDEON AHIADZI          | 110*****                  |
-| MICHAEL KWAME JOHNSON   | 110*****                  |
-| OBED BARNES             | 110*****                  |
-| GIDEON KWAME KUDROHA    | 110*****                  |
-| PASCAL A. TAMEKLOE      | 110*****                  |
+| TAMATEY, ABRAHAM        | 110*****                  |
+| PEASAH-DARKWAH, EMMANUEL| 110*****                  |
+| A*****, G*****          | 110*****                  |
+| JOHNSON, MICHAEL KWAME  | 110*****                  |
+| BARNES, OBED            | 110*****                  |
+| KUDROHA, GIDEON KWAME   | 110*****                  |
+| TAMEKLOE, PASCAL A.     | 110*****                  |
 
 ## Getting Started
 
