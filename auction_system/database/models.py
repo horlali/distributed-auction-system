@@ -26,6 +26,15 @@ class User(Base):
     user_type = Column(db_enum(UserType), nullable=False)
 
 
+class Token(Base):
+    __tablename__ = "tokens"
+    id = Column(Integer, primary_key=True)
+    token = Column(String(500), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+
+    users = relationship("User", backref="token", lazy=True)
+
+
 class Auction(Base):
     __tablename__ = "auctions"
     id = Column(Integer, primary_key=True)
@@ -37,7 +46,9 @@ class Auction(Base):
     reserved_price = Column(Float, nullable=False)
     seller = Column(Integer, ForeignKey("users.id"), nullable=False)
     status = Column(
-        db_enum(AuctionStatus), default=AuctionStatus.ACTIVE, nullable=False
+        db_enum(AuctionStatus),
+        default=AuctionStatus.ACTIVE,
+        nullable=False,
     )
 
     users = relationship("User", backref="auction", lazy=True)
