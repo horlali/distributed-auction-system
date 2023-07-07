@@ -11,6 +11,8 @@ python = "^3.11"
 pyro4 = "^4.82"
 streamlit = "^1.24.0"
 python-dotenv = "^1.0.0"
+sqlalchemy = "^2.0.18"
+werkzeug = "^2.3.6"
 
 
 [tool.poetry.group.dev.dependencies]
