@@ -14,8 +14,8 @@ class UserType(Enum):
 
 
 class AuctionStatus(Enum):
-    ACTIVE = "active"
-    CLOSED = "closed"
+    ACTIVE: str = "active"
+    CLOSED: str = "closed"
 
 
 class User(Base):
