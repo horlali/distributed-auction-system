@@ -36,7 +36,9 @@ class Auction(Base):
     starting_price = Column(Float, nullable=False)
     reserved_price = Column(Float, nullable=False)
     seller = Column(Integer, ForeignKey("users.id"), nullable=False)
-    status = Column(db_enum(AuctionStatus), default=AuctionStatus.ACTIVE, nullable=False)
+    status = Column(
+        db_enum(AuctionStatus), default=AuctionStatus.ACTIVE, nullable=False
+    )
 
     users = relationship("User", backref="auction", lazy=True)
 
