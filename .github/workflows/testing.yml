@@ -81,8 +81,8 @@ jobs:
       #----------------------------------------------
       #              run test suite
       #----------------------------------------------
-      # - name: Run test
-      #   run: ./scripts/run-tests.sh
+      - name: Run test
+        run: ./scripts/run-tests.sh --actions
 
       #----------------------------------------------
       #          codecov coverage report
