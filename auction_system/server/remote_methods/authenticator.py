@@ -11,6 +11,7 @@ logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(__name__)
 
 
+@Pyro4.expose
 class Authenticator:
     def register(self, email, password, user_type):
         users = session.query(User).filter_by(email=email.lower()).all()

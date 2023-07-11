@@ -41,10 +41,3 @@ class BidSchema(SQLAlchemyAutoSchema):
         include_relationships = True
         include_fk = True
         sqla_session = session
-
-    class Meta:
-        model = Bid
-        load_instance = True
-        include_relationships = True
-        include_fk = True
-        sqla_session = session
