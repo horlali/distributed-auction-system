@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from auction_system.server.database.models import AuctionStatus
-from auction_system.server.remote_methods.auctions_bid_objects import AuctionBidObject
+from auction_system.server.remote_methods.auctions_bids import AuctionBidObject
 
 auc_bid_obj = AuctionBidObject()
 
@@ -35,6 +35,7 @@ print(get_single_auction_data)
 
 print("============get_all_active_auctions=================")
 print(auc_bid_obj.get_all_active_auctions())
+
 
 print("============close_auction=================")
 
