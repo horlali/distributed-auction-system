@@ -5,6 +5,7 @@ set -e
 # Go to backend folder
 cd $(dirname $0)/..
 
+
 # The --actions flag writes a coverage.xml file which is 
 # used by GitHub Actions and CodeCov for coverage reports.
 if [ "$1" = "--actions" ];
