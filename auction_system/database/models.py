@@ -1,48 +1,56 @@
+import enum
 from datetime import datetime
-from enum import Enum
 
-from beanie import Document, PydanticObjectId
-from pydantic import EmailStr, Field
+from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import declarative_base, relationship
 
-
-class UserType(str, Enum):
-    BUYER = "buyer"
-    SELLER = "seller"
+Base = declarative_base()
 
 
-class AuctionStatus(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    SOLD = "sold"
+class UserType(enum.Enum):
+    SELLER: str = "seller"
+    BIDDER: str = "bidder"
 
 
-class User(Document):
-    id: PydanticObjectId = Field(default_factory=PydanticObjectId, alias="_id")
-    email: EmailStr
-    password_hash: str
-    user_type: UserType
+class AuctionStatus(enum.Enum):
+    ACTIVE: str = "active"
+    CLOSED: str = "closed"
+    SOLD: str = "sold"
 
 
-class Token(Document):
-    id: PydanticObjectId = Field(default_factory=PydanticObjectId, alias="_id")
-    token: str
-    user_id: PydanticObjectId
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String(120), unique=True, nullable=False)
+    password_hash = Column(String(128), nullable=False)
+    user_type = Column(Enum(UserType), nullable=False)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 
-class Auction(Document):
-    id: PydanticObjectId = Field(default_factory=PydanticObjectId, alias="_id")
-    title: str
-    description: str
-    start_time: datetime
-    end_time: datetime
-    starting_price: float
-    reserved_price: float
-    seller: PydanticObjectId
-    status: AuctionStatus
+class Auction(Base):
+    __tablename__ = "auctions"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    description = Column(String(500), nullable=False)
+    start_time = Column(DateTime, nullable=False)
+    end_time = Column(DateTime, nullable=False)
+    starting_price = Column(Float, nullable=False)
+    reserved_price = Column(Float, nullable=False)
+    seller_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    status = Column(Enum(AuctionStatus), default=AuctionStatus.ACTIVE, nullable=False)
+
+    # users = relationship("User", backref="auction", lazy=True)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 
-class Bid(Document):
-    id: PydanticObjectId = Field(default_factory=PydanticObjectId, alias="_id")
-    amount: float
-    user_id: PydanticObjectId
-    auction_id: PydanticObjectId
+class Bid(Base):
+    __tablename__ = "bids"
+    id = Column(Integer, primary_key=True)
+    amount = Column(Float, nullable=False)
+    bidder_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    auction_id = Column(Integer, ForeignKey("auctions.id"), nullable=False)
+
+    # users = relationship("User", backref="bid", lazy=True)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
