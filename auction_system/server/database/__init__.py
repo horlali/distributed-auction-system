@@ -10,7 +10,7 @@ engine = create_engine(sqlite_url)
 
 
 def create_db_and_tables():
-    from auction_system.database.models import Auction, Base, Bid, User
+    from auction_system.server.database.models import Auction, Base, Bid, User
 
     Base.metadata.create_all(
         engine,

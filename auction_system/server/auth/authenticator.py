@@ -1,9 +1,11 @@
 import logging
 import uuid
 
+import Pyro4
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from auction_system.database.models import Token, User, UserType, session
+from auction_system.server.database import session
+from auction_system.server.database.models import Token, User, UserType
 
 logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(__name__)
