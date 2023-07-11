@@ -9,7 +9,7 @@ cd $(dirname $0)/..
 BLACK_ARGS="--check"
 ISORT_ARGS="--check-only"
 
-# call this script with --fix to have it fix the files
+# Call this script with --fix to have it fix the files
 if [ "$1" = "--fix" ]; 
     then
         echo "Files will be formatted"
@@ -20,15 +20,15 @@ fi
 
 # BLACK
 echo "======Black formatting checks======"
-poetry run black ${ARGS} auction_system tests
+poetry run black ${BLACK_ARGS} auction_system tests
 
 
 # ISORT
 echo "====Isort import sorting checks===="
-poetry run isort ${ARGS} auction_system tests && echo "isort successful"
+poetry run isort ${ISORT_ARGS} auction_system tests && echo "isort successful"
 
 
 # FLAKE8
-# echo "=======Flake8 linting checks======="
+echo "=======Flake8 linting checks======="
 # flake8 is silent when it's successful, so make some noise
-# poetry run flake8 auction_system tests && echo "flake8 successful"
+poetry run flake8 auction_system tests && echo "flake8 successful"
