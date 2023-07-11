@@ -4,6 +4,8 @@ from datetime import datetime
 from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import declarative_base, relationship
 
+from auction_system.database import session
+
 Base = declarative_base()
 
 
@@ -41,7 +43,7 @@ class Auction(Base):
     seller_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     status = Column(Enum(AuctionStatus), default=AuctionStatus.ACTIVE, nullable=False)
 
-    # users = relationship("User", backref="auction", lazy=True)
+    users = relationship("User", backref="auction", lazy=True)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 
@@ -52,5 +54,5 @@ class Bid(Base):
     bidder_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     auction_id = Column(Integer, ForeignKey("auctions.id"), nullable=False)
 
-    # users = relationship("User", backref="bid", lazy=True)
+    users = relationship("User", backref="bid", lazy=True)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)

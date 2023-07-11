@@ -32,7 +32,7 @@ def main():
     for x in users:
         print(user_schema.dump(x))
 
-    print("===================AUCTION===============")
+    print("==================AUCTION===============")
     auction = Auction(
         title="My first auction",
         description="My first auction description",
