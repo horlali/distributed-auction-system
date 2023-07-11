@@ -2,9 +2,15 @@ from datetime import datetime
 
 from faker import Faker
 
-from auction_system.database import create_db_and_tables, session
-from auction_system.database.models import Auction, AuctionStatus, Bid, User, UserType
-from auction_system.database.schemas import AuctionSchema, BidSchema, UserSchema
+from auction_system.server.database import create_db_and_tables, session
+from auction_system.server.database.models import (
+    Auction,
+    AuctionStatus,
+    Bid,
+    User,
+    UserType,
+)
+from auction_system.server.database.schemas import AuctionSchema, BidSchema, UserSchema
 
 fake = Faker()
 user_schema = UserSchema()

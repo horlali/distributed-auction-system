@@ -4,8 +4,6 @@ from datetime import datetime
 from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import declarative_base, relationship
 
-from auction_system.database import session
-
 Base = declarative_base()
 
 
@@ -27,6 +25,15 @@ class User(Base):
     email = Column(String(120), unique=True, nullable=False)
     password_hash = Column(String(128), nullable=False)
     user_type = Column(Enum(UserType), nullable=False)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+
+
+class Token(Base):
+    __tablename__ = "tokens"
+
+    id = Column(Integer, primary_key=True)
+    token = Column(String(500), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 

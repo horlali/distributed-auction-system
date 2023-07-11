@@ -1,8 +1,14 @@
 import marshmallow as ma
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
-from auction_system.database import session
-from auction_system.database.models import Auction, AuctionStatus, Bid, User, UserType
+from auction_system.server.database import session
+from auction_system.server.database.models import (
+    Auction,
+    AuctionStatus,
+    Bid,
+    User,
+    UserType,
+)
 
 
 class UserSchema(SQLAlchemyAutoSchema):
@@ -29,6 +35,13 @@ class AuctionSchema(SQLAlchemyAutoSchema):
 
 
 class BidSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Bid
+        load_instance = True
+        include_relationships = True
+        include_fk = True
+        sqla_session = session
+
     class Meta:
         model = Bid
         load_instance = True
