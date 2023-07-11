@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from auction_system.server.database.models import AuctionStatus
-from auction_system.server.remote_methods.auctions_bids import AuctionBidObject
+from auction_system.server.remote_objects.auctions_bids import AuctionBidObject
 
 auc_bid_obj = AuctionBidObject()
 
