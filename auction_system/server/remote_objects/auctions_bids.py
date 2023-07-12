@@ -8,7 +8,6 @@ from auction_system.server.database.schemas import AuctionSchema, BidSchema, Use
 @Pyro4.expose
 class AuctionBidObject(object):
     def __init__(self):
-        create_db_and_tables()
         self.session = session
         self.user_schema = UserSchema()
         self.auction_schema = AuctionSchema()

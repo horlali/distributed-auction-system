@@ -29,8 +29,8 @@ class Authenticator:
 
             session.add(user)
             session.commit()
+            return user.id, user.token
 
-            return True
         return False
 
     def login(self, email, password):
@@ -38,7 +38,7 @@ class Authenticator:
 
         if user:
             if check_password_hash(user.password_hash, password):
-                return user.token
+                return user.id, user.token
 
             return False
         return False
