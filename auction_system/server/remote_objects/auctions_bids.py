@@ -1,6 +1,6 @@
 import Pyro4
 
-from auction_system.server.database import create_db_and_tables, session
+from auction_system.server.database import session
 from auction_system.server.database.models import Auction, AuctionStatus, Bid
 from auction_system.server.database.schemas import AuctionSchema, BidSchema, UserSchema
 
