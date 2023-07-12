@@ -26,7 +26,6 @@ class User(Base):
     email = Column(String(120), unique=True, nullable=False)
     password_hash = Column(String(128), nullable=False)
     user_type = Column(Enum(UserType), nullable=False)
-    token = Column(String(128), default=str(uuid.uuid4()), nullable=False)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 
