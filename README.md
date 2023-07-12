@@ -1,4 +1,4 @@
-# FILE RETRIEVAL SYSTEM
+# DISTRIBUTED AUCTION SYSTEM
 
 CSCD 604: DISTRIBUTED SYSTEM
 
@@ -60,7 +60,7 @@ chmod +x scripts/*
 
 ## Running Servers
 
-In the root of the repository `:~/file-retrieval-system` run the server scripts below
+In the root of the repository `:~/distributed-auction-system` run the server scripts below
 
 ```bash
 ./scripts/run-server.sh
