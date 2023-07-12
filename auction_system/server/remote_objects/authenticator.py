@@ -5,7 +5,7 @@ import Pyro4
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from auction_system.server.database import session
-from auction_system.server.database.models import Token, User, UserType
+from auction_system.server.database.models import User, UserType
 
 logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(__name__)
@@ -29,8 +29,8 @@ class Authenticator:
 
             session.add(user)
             session.commit()
+            return user.id, user.token
 
-            return True
         return False
 
     def login(self, email, password):
@@ -38,22 +38,18 @@ class Authenticator:
 
         if user:
             if check_password_hash(user.password_hash, password):
-                token_str = str(uuid.uuid4())
-                token = Token(user_id=user.id, token=token_str)
-                session.add(token)
-                session.commit()
-
-                return token_str
+                return user.id, user.token
 
             return False
         return False
 
     def logout(self, token):
         try:
-            user_token = session.query(Token).filter_by(token=token).first()
-            session.delete(user_token)
+            user = session.query(User).filter_by(token=token).first()
+            user.token = str(uuid.uuid4())
             session.commit()
             return True
 
         except Exception as e:
             logger.error(e)
+            return False

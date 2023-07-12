@@ -1,4 +1,5 @@
 import enum
+import uuid
 from datetime import datetime
 
 from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String
@@ -25,15 +26,7 @@ class User(Base):
     email = Column(String(120), unique=True, nullable=False)
     password_hash = Column(String(128), nullable=False)
     user_type = Column(Enum(UserType), nullable=False)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
-
-
-class Token(Base):
-    __tablename__ = "tokens"
-
-    id = Column(Integer, primary_key=True)
-    token = Column(String(500), nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    token = Column(String(128), default=str(uuid.uuid4()), nullable=False)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
 
 
