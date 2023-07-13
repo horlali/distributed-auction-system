@@ -7,7 +7,7 @@ cd $(dirname $0)/..
 
 NAME="Distributed-Auction-System"
 PROJECT_DIR="${PWD}/auction_system"
-MODULE_NAME="client/home.py"
+MODULE_NAME="client/Home.py"
 
 echo "Starting ${NAME} client..."
 

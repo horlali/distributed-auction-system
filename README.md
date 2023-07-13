@@ -1,4 +1,4 @@
-# FILE RETRIEVAL SYSTEM
+# DISTRIBUTED AUCTION SYSTEM
 
 CSCD 604: DISTRIBUTED SYSTEM
 
@@ -45,10 +45,15 @@ cp .env.example .env
 
 It is preferable to create and activate a virtual environment before installing the dependencies. You can read more about python virtual environments and how to create and activate it [here](https://realpython.com/python-virtual-environments-a-primer/)
 
-Install the required dependencies
+Since poetry is used for dependency management, you need to have it installed first. You can read more about poetry and how to install it [here](https://python-poetry.org/docs/#installation). Or you can install it with the command below (Although not recommended).
 
 ```bash
-pip install -r requirements.txt
+pip install poetry
+```
+
+Once poetry is installed, run the command below to install the dependencies
+
+```bash
 poetry install
 ```
 
@@ -60,7 +65,7 @@ chmod +x scripts/*
 
 ## Running Servers
 
-In the root of the repository `:~/file-retrieval-system` run the server scripts below
+In the root of the repository `:~/distributed-auction-system` run the server scripts below
 
 ```bash
 ./scripts/run-server.sh

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from faker import Faker
+from werkzeug.security import generate_password_hash
 
 from auction_system.server.database import create_db_and_tables, session
 from auction_system.server.database.models import (
@@ -22,7 +23,7 @@ def main():
     print("==================USER===================")
     user = User(
         email=fake.email(),
-        password_hash=fake.password(),
+        password_hash=generate_password_hash(fake.password()),
         user_type=UserType.BIDDER,
     )
 
