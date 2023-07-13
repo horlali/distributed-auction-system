@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 from typing import Dict, List
 
@@ -11,7 +10,7 @@ st.write("# Welcome to the Special Auction System 👋")
 
 
 def show_auctions():
-    st.write("## All Auctions")
+    st.write("#### Recent Active Auctions")
     st.divider()
     auctions: List[Dict] = auction_bid_object.get_all_active_auctions()
 
@@ -36,9 +35,6 @@ def show_auctions():
             st.text(f"Auction started at: {start_time}")
             st.text(f"Auction ends at: {end_time}")
             st.text(f"Seller ID: {auction['seller_id']}")
-
-            # st.text(f"Reserved price: {auction['reserved_price']}")
-            # st.text(f"{auction['id']}")
 
         with col3:
             # create a button to place a bid
