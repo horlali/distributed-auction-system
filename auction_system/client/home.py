@@ -18,6 +18,7 @@ def show_auctions():
         auctions: List[Dict] = auction_bid_object.get_all_active_auctions()
         for auction in auctions:
             col1, col2, col3 = st.columns([1, 3, 1])
+
             with col1:
                 st.image(cart_image, width=150)
 
