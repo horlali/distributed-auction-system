@@ -7,7 +7,7 @@ from Pyro4.errors import CommunicationError
 from auction_system.client.components.connections import auction_bid_object, cart_image
 
 st.set_page_config(page_title="Auction System", page_icon="👋", layout="wide")
-st.write("# Welcome to the Special Auction System 👋")
+st.write("# Welcome to the Group 8's Auction System 👋")
 
 
 def show_auctions():
