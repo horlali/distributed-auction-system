@@ -54,7 +54,7 @@ def show_auctions():
                     # place the bid
                     bid = auction_bid_object.place_bid(bid_data)
                     st.success(
-                        f"Your successfully placed a bid of {bid['amount']} for this item"  # noqa: E501
+                        f"Your successfully placed a bid of **{bid['amount']}** for this item"  # noqa: E501
                     )
 
             st.divider()
