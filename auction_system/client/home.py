@@ -56,6 +56,7 @@ def show_auctions():
                             "bidder_id": auction["seller_id"],
                             "auction_id": auction["id"],
                         }
+
                         bid = auction_bid_object.place_bid(bid_data)
                         st.success(
                             f"Your successfully placed a bid of **{bid['amount']}** for this item"  # noqa: E501
