@@ -5,7 +5,6 @@ import streamlit as st
 from Pyro4.errors import CommunicationError
 
 from auction_system.client.components.connections import auction_bid_object, cart_image
-from auction_system.utils.extentions import element_keys
 
 st.set_page_config(page_title="Auction System", page_icon="👋", layout="wide")
 st.write("# Welcome to the Special Auction System 👋")
@@ -42,10 +41,10 @@ def show_auctions():
 
             with col3:
                 bid_amount = st.number_input(
-                    "Enter your bid amount", min_value=0.0, key=element_keys()
+                    "Enter your bid amount", min_value=0.0, key=auction["id"]
                 )
 
-                if st.button("Checkout", key=element_keys()):
+                if st.button("Checkout", key=f"{auction['id']}_"):
                     bid_data = {
                         "amount": bid_amount,
                         "bidder_id": auction["seller_id"],
@@ -54,7 +53,9 @@ def show_auctions():
 
                     # place the bid
                     bid = auction_bid_object.place_bid(bid_data)
-                    st.success(f"Your bid has been placed successfully: {bid}")
+                    st.success(
+                        f"Your successfully placed a bid of {bid['amount']} for this item"  # noqa: E501
+                    )
 
             st.divider()
 
