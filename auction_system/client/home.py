@@ -45,17 +45,21 @@ def show_auctions():
                 )
 
                 if st.button("Checkout", key=f"{auction['id']}_"):
-                    bid_data = {
-                        "amount": bid_amount,
-                        "bidder_id": auction["seller_id"],
-                        "auction_id": auction["id"],
-                    }
+                    if bid_amount < auction["starting_price"]:
+                        st.error(
+                            f"Your bid amount should be greater than or equal to {auction['starting_price']}"  # noqa: E501
+                        )
 
-                    # place the bid
-                    bid = auction_bid_object.place_bid(bid_data)
-                    st.success(
-                        f"Your successfully placed a bid of **{bid['amount']}** for this item"  # noqa: E501
-                    )
+                    else:
+                        bid_data = {
+                            "amount": bid_amount,
+                            "bidder_id": auction["seller_id"],
+                            "auction_id": auction["id"],
+                        }
+                        bid = auction_bid_object.place_bid(bid_data)
+                        st.success(
+                            f"Your successfully placed a bid of **{bid['amount']}** for this item"  # noqa: E501
+                        )
 
             st.divider()
 
