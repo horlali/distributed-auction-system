@@ -50,6 +50,9 @@ def show_auctions():
                             f"Your bid amount should be greater than or equal to {auction['starting_price']}"  # noqa: E501
                         )
 
+                    elif datetime.now() > datetime.fromisoformat(auction["end_time"]):
+                        st.error(f"Sorry, the auction ended on {end_time}")
+
                     else:
                         bid_data = {
                             "amount": bid_amount,
