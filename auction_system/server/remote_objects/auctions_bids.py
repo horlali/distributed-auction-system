@@ -1,7 +1,7 @@
 import Pyro4
 
 from auction_system.server.database import session
-from auction_system.server.database.models import Auction, AuctionStatus, Bid
+from auction_system.server.database.models import Auction, AuctionStatus, Bid, User
 from auction_system.server.database.schemas import AuctionSchema, BidSchema, UserSchema
 
 
@@ -62,9 +62,10 @@ class AuctionBidObject(object):
         for auction in auctions:
             bids = self.session.query(Bid).filter_by(auction_id=auction.id).all()
             for bid in bids:
-                bidders.append(bid.bidder_id)
+                user = self.session.query(User).filter_by(id=bid.bidder_id).first()
+                bidders.append({"name": user.first_name, "bid_amount": bid.amount})
 
-        return self.user_schema.dump(bidders, many=True)
+        return bidders
 
     def get_auction_winner(self, auction_id):
         bids = self.session.query(Bid).filter_by(auction_id=auction_id).all()

@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Dict, List
 
 import streamlit as st
 from Pyro4.errors import CommunicationError
@@ -13,8 +14,49 @@ def get_all_my_auctions():
     """get all the auctions created by the seller"""
 
     st.write("#### All My Auctions")
+    st.divider()
+
     try:
-        auction_bid_object.get_my_auctions(1)
+        auctions: List[Dict] = auction_bid_object.get_my_auctions(1)
+
+        for auction in auctions:
+            col1, col2, col3 = st.columns([2, 2, 1.2])
+
+            with col1:
+                st.write(f"**Auction Details**")
+                start_time = datetime.fromisoformat(
+                    auction["start_time"],
+                ).strftime("%B %d, %Y %I:%M %p")
+
+                end_time = datetime.fromisoformat(
+                    auction["end_time"],
+                ).strftime("%B %d, %Y %I:%M %p")
+
+                st.write(f"**Item title:** {auction['title']}")
+                st.write(f"**Item description:** {auction['description']}")
+                st.write(f"**Starting price:** {auction['starting_price']}")
+                st.write(f"**Auction status:** {auction['status']}")
+                st.write(f"**Auction started at:** {start_time}")
+                st.write(f"**Auction ends at:** {end_time}")
+
+            with col2:
+                st.write(f"**Bidders**")
+                bidders = auction_bid_object.get_bidders_for_my_auctions(1)
+                for bidder in bidders:
+                    st.write(
+                        f"**Name:** {bidder['name']} **Amount:** {bidder['bid_amount']}"
+                    )
+
+            with col3:
+                st.write(f"**Actions**")
+                if st.button("Close Auction", key=f"{auction['id']}_"):
+                    auction_bid_object.close_auction(auction["id"])
+                    st.success("Auction closed successfully")
+
+                    if st.button("Refresh"):
+                        st.experimental_rerun()
+
+            st.divider()
 
     except CommunicationError:
         st.error("Failed to connect to the server")
@@ -110,4 +152,6 @@ def get_bidders():
 
 
 if __name__ == "__main__":
-    add_auction()
+    if st.button("Add Auction"):
+        add_auction()
+    get_all_my_auctions()
