@@ -81,3 +81,22 @@ class AuctionBidObject(object):
 
         else:
             return None
+
+    def check_bid_status(self, auction_id, bidder_id):
+        bids = self.session.query(Bid).filter_by(auction_id=auction_id).all()
+        reserved_price = (
+            self.session.query(Auction).filter_by(id=auction_id).first().reserved_price
+        )
+
+        if bids:
+            highest_bid = max(bids, key=lambda x: x.amount)
+
+            if highest_bid.bidder_id == bidder_id:
+                if reserved_price >= highest_bid.amount:
+                    return "Your bid won this auction and the reserved price is met"
+                else:
+                    return "You bid won this auction but the reserved price is not met"
+            else:
+                return "Bid lost"
+        else:
+            return "No bids found for this auction"
