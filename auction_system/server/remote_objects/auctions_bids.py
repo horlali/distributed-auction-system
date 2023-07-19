@@ -106,3 +106,14 @@ class AuctionBidObject(object):
 
         else:
             return "No bids found for this auction."
+
+    def withdraw_bid(self, bid_id):
+        bid = self.session.query(Bid).filter_by(id=bid_id).first()
+        auction = self.session.query(Auction).filter_by(id=bid.auction_id).first()
+        if auction.status == AuctionStatus.CLOSED:
+            return "You cannot withdraw a bid for a closed auction."
+        
+        self.session.delete(bid)
+        self.session.commit()
+
+        return "Bid withdrawn successfully"
