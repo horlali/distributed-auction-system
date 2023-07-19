@@ -14,7 +14,6 @@ class AuctionBidObject(object):
         self.bid_schema = BidSchema()
 
     def create_auction(self, auction_data):
-        print(auction_data)
         auction = Auction(**auction_data)
         self.session.add(auction)
         self.session.commit()

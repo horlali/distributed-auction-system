@@ -4,7 +4,6 @@ import streamlit as st
 from Pyro4.errors import CommunicationError
 
 from auction_system.client.components.connections import auction_bid_object
-from auction_system.server.database.models import AuctionStatus
 
 st.set_page_config(page_title="Seller", page_icon="👋", layout="wide")
 st.write("## Manage Your Auctions Here 👋")
@@ -67,7 +66,6 @@ def add_auction():
 
             try:
                 response = auction_bid_object.create_auction(form_data)
-                print(response)
 
             except CommunicationError:
                 st.error("Failed to connect to the server")
