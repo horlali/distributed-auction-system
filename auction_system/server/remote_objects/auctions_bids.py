@@ -84,19 +84,40 @@ class AuctionBidObject(object):
 
     def check_bid_status(self, auction_id, bidder_id):
         bids = self.session.query(Bid).filter_by(auction_id=auction_id).all()
-        reserved_price = (
-            self.session.query(Auction).filter_by(id=auction_id).first().reserved_price
-        )
+        auction = self.session.query(Auction).filter_by(id=auction_id).first()
+
+        reserved_price = auction.reserved_price
+        auction_status = auction.status
 
         if bids:
             highest_bid = max(bids, key=lambda x: x.amount)
 
+            if auction_status == AuctionStatus.ACTIVE:
+                return "Auction is still active, check back later."
+
+            # if bids.count(highest_bid) > 1:
+            #     return "There are ties in the bids, please check back later."
+
             if highest_bid.bidder_id == bidder_id:
                 if reserved_price >= highest_bid.amount:
-                    return "Your bid won this auction and the reserved price is met"
+                    return "Your bid won this auction and the reserved price is met."
                 else:
-                    return "You bid won this auction but the reserved price is not met"
+                    return "Your bid won this auction but the reserved price is not met."
+
             else:
-                return "Bid lost"
+                return "Bid lost."
+
         else:
-            return "No bids found for this auction"
+            return "No bids found for this auction."
+
+    def withdraw_bid(self, bid_id):
+        bid = self.session.query(Bid).filter_by(id=bid_id).first()
+        auction = self.session.query(Auction).filter_by(id=bid.auction_id).first()
+
+        if auction.status == AuctionStatus.CLOSED:
+            return "You cannot withdraw a bid for a closed auction."
+
+        self.session.delete(bid)
+        self.session.commit()
+
+        return "Bid withdrawn successfully"

@@ -19,19 +19,28 @@ def show_my_bids():
             auction["bid_amount"] = bid["amount"]
             auctions.append(auction)
 
-            col1, col2 = st.columns([3, 2])
+            col1, col2 = st.columns([2, 1.2])
 
             with col1:
                 st.write(f"**Item title:** {auction['title']}")
                 st.write(f"**Item description:** {auction['description']}")
-                st.write(f"**Starting price:** {auction['starting_price']}")
                 st.write(f"**Auction status:** {auction['status']}")
-                st.write(f"**Seller ID:** {auction['seller_id']}")
+                st.write(f"**Starting price:** {auction['starting_price']}")
+                st.write(f"**Bid amount:** {auction['bid_amount']}")
 
             with col2:
-                if st.button("Check Bid Status", key=f"{bid['id']}_"):
+                if st.button("**Check Bid Status**", key=f"{bid['id']}_"):
                     bid_status = auction_bid_object.check_bid_status(auction["id"], 1)
                     st.write(f"**Bid Status:** {bid_status}")
+
+                st.divider()
+
+                if st.button("**Withdraw Bid**", key=f"{bid['id']}__"):
+                    auction_bid_object.withdraw_bid(bid["id"])
+                    st.success("Bid withdrawn successfully")
+
+                    if st.button("Refresh"):
+                        st.experimental_rerun()
 
             st.divider()
 
