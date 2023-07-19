@@ -16,6 +16,10 @@ def show_auctions():
 
     try:
         auctions: List[Dict] = auction_bid_object.get_all_active_auctions()
+
+        # TODO: Sort auctions by end time
+        # auctions = sorted(auctions, key=lambda x: x["end_time"])
+
         for auction in auctions:
             col1, col2, col3 = st.columns([1, 3, 1])
 

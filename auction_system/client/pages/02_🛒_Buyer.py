@@ -33,14 +33,15 @@ def show_my_bids():
                     bid_status = auction_bid_object.check_bid_status(auction["id"], 1)
                     st.write(f"**Bid Status:** {bid_status}")
 
-                st.divider()
+                if auction["status"] == "ACTIVE":
+                    st.divider()
 
-                if st.button("**Withdraw Bid**", key=f"{bid['id']}__"):
-                    auction_bid_object.withdraw_bid(bid["id"])
-                    st.success("Bid withdrawn successfully")
+                    if st.button("**Withdraw Bid**", key=f"{bid['id']}__"):
+                        auction_bid_object.withdraw_bid(bid["id"])
+                        st.success("Bid withdrawn successfully")
 
-                    if st.button("Refresh"):
-                        st.experimental_rerun()
+                        if st.button("Refresh"):
+                            st.experimental_rerun()
 
             st.divider()
 

@@ -23,7 +23,7 @@ def get_all_my_auctions():
             col1, col2, col3 = st.columns([2, 2, 1.2])
 
             with col1:
-                st.write(f"**Auction Details**")
+                st.write("**Auction Details**")
                 start_time = datetime.fromisoformat(
                     auction["start_time"],
                 ).strftime("%B %d, %Y %I:%M %p")
@@ -40,7 +40,7 @@ def get_all_my_auctions():
                 st.write(f"**Auction ends at:** {end_time}")
 
             with col2:
-                st.write(f"**Bidders**")
+                st.write("**Bidders**")
                 bidders = auction_bid_object.get_bidders_for_my_auctions(1)
                 for bidder in bidders:
                     st.write(
@@ -48,7 +48,7 @@ def get_all_my_auctions():
                     )
 
             with col3:
-                st.write(f"**Actions**")
+                st.write("**Actions**")
                 if st.button("Close Auction", key=f"{auction['id']}_"):
                     auction_bid_object.close_auction(auction["id"])
                     st.success("Auction closed successfully")
@@ -60,11 +60,6 @@ def get_all_my_auctions():
 
     except CommunicationError:
         st.error("Failed to connect to the server")
-
-
-def close_auction():
-    """close the auction if the deadline is reached"""
-    ...
 
 
 def add_auction():
@@ -85,8 +80,8 @@ def add_auction():
             start_time = st.time_input("Start Time")
             end_time = st.time_input("End Time")
 
-        starting_price = st.number_input("Starting Price")
-        reserved_price = st.number_input("Reserved Price")
+        starting_price = st.number_input("Starting Price", min_value=0.0)
+        reserved_price = st.number_input("Reserved Price", min_value=0.0)
         seller_id = st.number_input("Seller ID", step=1, format="%i")
         submit_form = st.form_submit_button(label="Submit Auction")
 
@@ -107,51 +102,14 @@ def add_auction():
             }
 
             try:
-                response = auction_bid_object.create_auction(form_data)
+                auction_bid_object.create_auction(form_data)
+                st.success("Auction created successfully")
 
             except CommunicationError:
                 st.error("Failed to connect to the server")
 
 
-def proces_add_auction_form(
-    title,
-    description,
-    start_time,
-    end_time,
-    starting_price,
-    reserved_price,
-    seller_id,
-    status,
-):
-    response = auction_bid_object.create_auction(
-        title,
-        description,
-        start_time,
-        end_time,
-        starting_price,
-        reserved_price,
-        seller_id,
-        status,
-    )
-
-    if response:
-        st.success("Auction added successfully")
-
-    else:
-        st.error("Failed to add auction")
-
-
-# pick a winner for the auction
-def pick_auction_winner():
-    ...
-
-
-# get bidders for the auction (secondary functionality)
-def get_bidders():
-    ...
-
-
 if __name__ == "__main__":
-    if st.button("Add Auction"):
-        add_auction()
+    add_auction()
+    st.divider()
     get_all_my_auctions()
