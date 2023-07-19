@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 @Pyro4.expose
-class Authenticator:
+class Authenticator(object):
     def register(self, email, password, user_type):
         users = session.query(User).filter_by(email=email.lower()).all()
 
@@ -38,7 +38,7 @@ class Authenticator:
 
         if user:
             if check_password_hash(user.password_hash, password):
-                return user.id, user.token
+                return user.id
 
             return False
         return False
