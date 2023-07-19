@@ -16,6 +16,10 @@ auction_data = {
     "status": AuctionStatus.ACTIVE,
 }
 
+print(auction_data)
+
+{'title': 'terre', 'description': 'rter', 'start_time': datetime.datetime(2023, 7, 26, 6, 0), 'end_time': datetime.datetime(2023, 7, 28, 8, 30), 'starting_price': 10.0, 'reserved_price': 12.0, 'seller_id': 1.0, 'status': 'Active'}
+
 bid_data = {
     "amount": 100,
     "bidder_id": 1,
