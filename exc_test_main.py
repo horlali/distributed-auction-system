@@ -34,42 +34,40 @@ def main():
     session.commit()
 
     user = session.query(User).get(user.id)
-    user.user_type = UserType.BIDDER
-    session.commit()
 
     users = session.query(User).filter_by(id=user.id)
 
     for x in users:
         print(user_schema.dump(x))
 
-    # print("==================AUCTION===============")
-    # auction = Auction(
-    #     title="My first auction",
-    #     description="My first auction description",
-    #     start_time=datetime.now(),
-    #     end_time=datetime.now(),
-    #     starting_price=100,
-    #     reserved_price=200,
-    #     seller_id=user.id,
-    #     status=AuctionStatus.ACTIVE,
-    # )
+    print("==================AUCTION===============")
+    auction = Auction(
+        title="My first auction",
+        description="My first auction description",
+        start_time=datetime.now(),
+        end_time=datetime.now(),
+        starting_price=100,
+        reserved_price=200,
+        seller_id=user.id,
+        status=AuctionStatus.ACTIVE,
+    )
 
-    # session.add(auction)
-    # session.commit()
+    session.add(auction)
+    session.commit()
 
-    # auctions = session.query(Auction).all()
-    # for y in auctions:
-    #     print(auction_schema.dump(y))
+    auctions = session.query(Auction).all()
+    for y in auctions:
+        print(auction_schema.dump(y))
 
-    # print("==================BID====================")
-    # bid = Bid(amount=100, bidder_id=user.id, auction_id=auction.id)
+    print("==================BID====================")
+    bid = Bid(amount=100, bidder_id=user.id, auction_id=auction.id)
 
-    # session.add(bid)
-    # session.commit()
+    session.add(bid)
+    session.commit()
 
-    # bids = session.query(Bid).all()
-    # for z in bids:
-    #     print(bid_schema.dump(z))
+    bids = session.query(Bid).all()
+    for z in bids:
+        print(bid_schema.dump(z))
 
 
 # Run the main function

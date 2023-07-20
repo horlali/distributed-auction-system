@@ -5,9 +5,12 @@ import streamlit as st
 from Pyro4.errors import CommunicationError
 
 from auction_system.client.components.connections import auction_bid_object, cart_image
+from auction_system.client.components.states import authentication_state
 
 st.set_page_config(page_title="Auction System", page_icon="👋", layout="wide")
 st.write("# Welcome to the Group 8's Auction System 👋")
+
+authentication_state()
 
 
 def show_auctions():
@@ -41,7 +44,6 @@ def show_auctions():
                 st.write(f"**Auction status:** {auction['status']}")
                 st.write(f"**Auction started at:** {start_time}")
                 st.write(f"**Auction ends at:** {end_time}")
-                st.write(f"**Seller ID:** {auction['seller_id']}")
 
             with col3:
                 bid_amount = st.number_input(
@@ -57,10 +59,13 @@ def show_auctions():
                     elif datetime.now() > datetime.fromisoformat(auction["end_time"]):
                         st.error(f"Sorry, the auction ended on {end_time}")
 
+                    elif auction["seller_id"] == st.session_state["user_id"]:
+                        st.error("You cannot bid on your own auction")
+
                     else:
                         bid_data = {
                             "amount": bid_amount,
-                            "bidder_id": auction["seller_id"],
+                            "bidder_id": st.session_state["user_id"],
                             "auction_id": auction["id"],
                         }
 
@@ -77,4 +82,5 @@ def show_auctions():
 
 
 if __name__ == "__main__":
-    show_auctions()
+    if st.session_state["authenticated"]:
+        show_auctions()

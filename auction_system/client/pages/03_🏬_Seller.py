@@ -5,9 +5,12 @@ import streamlit as st
 from Pyro4.errors import CommunicationError
 
 from auction_system.client.components.connections import auction_bid_object
+from auction_system.client.components.states import authentication_state
 
 st.set_page_config(page_title="Seller", page_icon="👋", layout="wide")
 st.write("## Manage Your Auctions Here 👋")
+
+authentication_state()
 
 
 def get_all_my_auctions():
@@ -17,7 +20,9 @@ def get_all_my_auctions():
     st.divider()
 
     try:
-        auctions: List[Dict] = auction_bid_object.get_my_auctions(1)
+        auctions: List[Dict] = auction_bid_object.get_my_auctions(
+            user_id=st.session_state["user_id"]
+        )
 
         for auction in auctions:
             col1, col2, col3 = st.columns([2, 2, 1.2])
@@ -41,7 +46,9 @@ def get_all_my_auctions():
 
             with col2:
                 st.write("**Bidders**")
-                bidders = auction_bid_object.get_bidders_for_my_auctions(1)
+                bidders = auction_bid_object.get_bidders_for_my_auctions(
+                    user_id=st.session_state["user_id"]
+                )
                 for bidder in bidders:
                     st.write(
                         f"**Name:** {bidder['name']} **Amount:** {bidder['bid_amount']}"
@@ -82,7 +89,6 @@ def add_auction():
 
         starting_price = st.number_input("Starting Price", min_value=0.0)
         reserved_price = st.number_input("Reserved Price", min_value=0.0)
-        seller_id = st.number_input("Seller ID", step=1, format="%i")
         submit_form = st.form_submit_button(label="Submit Auction")
 
         # combine date and time
@@ -97,7 +103,7 @@ def add_auction():
                 "end_time": end_date_val,
                 "starting_price": starting_price,
                 "reserved_price": reserved_price,
-                "seller_id": seller_id,
+                "seller_id": st.session_state["user_id"],
                 "status": "ACTIVE",
             }
 
@@ -110,6 +116,14 @@ def add_auction():
 
 
 if __name__ == "__main__":
-    add_auction()
-    st.divider()
-    get_all_my_auctions()
+    if st.session_state["authenticated"]:
+        if st.session_state["user_type"] == "seller":
+            add_auction()
+            st.divider()
+            get_all_my_auctions()
+
+        elif st.session_state["user_type"] == "bidder":
+            st.error("You are not authorized to access this page")
+
+        else:
+            st.error("Something went wrong. We are actively working to fix it.")
