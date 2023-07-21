@@ -1,8 +1,9 @@
 import Pyro4
 
 from auction_system.server.database import session
-from auction_system.server.database.models import Auction, AuctionStatus, Bid
+from auction_system.server.database.models import Auction, AuctionStatus, Bid, User
 from auction_system.server.database.schemas import AuctionSchema, BidSchema, UserSchema
+from auction_system.utils.extentions import date_string_to_datetime
 
 
 @Pyro4.expose
@@ -14,7 +15,17 @@ class AuctionBidObject(object):
         self.bid_schema = BidSchema()
 
     def create_auction(self, auction_data):
-        auction = Auction(**auction_data)
+        auction = Auction(
+            title=auction_data["title"],
+            description=auction_data["description"],
+            start_time=date_string_to_datetime(auction_data["start_time"]),
+            end_time=date_string_to_datetime(auction_data["end_time"]),
+            starting_price=auction_data["starting_price"],
+            reserved_price=auction_data["reserved_price"],
+            seller_id=auction_data["seller_id"],
+            status=AuctionStatus.ACTIVE,
+        )
+
         self.session.add(auction)
         self.session.commit()
 
@@ -62,9 +73,10 @@ class AuctionBidObject(object):
         for auction in auctions:
             bids = self.session.query(Bid).filter_by(auction_id=auction.id).all()
             for bid in bids:
-                bidders.append(bid.bidder_id)
+                user = self.session.query(User).filter_by(id=bid.bidder_id).first()
+                bidders.append({"name": user.first_name, "bid_amount": bid.amount})
 
-        return self.user_schema.dump(bidders, many=True)
+        return bidders
 
     def get_auction_winner(self, auction_id):
         bids = self.session.query(Bid).filter_by(auction_id=auction_id).all()

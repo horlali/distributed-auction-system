@@ -22,6 +22,9 @@ bid_schema = BidSchema()
 def main():
     print("==================USER===================")
     user = User(
+        first_name=fake.first_name(),
+        last_name=fake.last_name(),
+        phone=fake.phone_number(),
         email=fake.email(),
         password_hash=generate_password_hash(fake.password()),
         user_type=UserType.BIDDER,
@@ -31,8 +34,6 @@ def main():
     session.commit()
 
     user = session.query(User).get(user.id)
-    user.user_type = UserType.BIDDER
-    session.commit()
 
     users = session.query(User).filter_by(id=user.id)
 

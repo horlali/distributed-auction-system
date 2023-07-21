@@ -2,9 +2,12 @@ import streamlit as st
 from Pyro4.errors import CommunicationError
 
 from auction_system.client.components.connections import auction_bid_object
+from auction_system.client.components.states import authentication_state
 
 st.set_page_config(page_title="Buyer", page_icon="👋", layout="wide")
 st.write("## Manage Your Bids Here 👋")
+
+authentication_state()
 
 
 def show_my_bids():
@@ -12,7 +15,7 @@ def show_my_bids():
 
     try:
         auctions = []
-        bids = auction_bid_object.get_my_bids(1)
+        bids = auction_bid_object.get_my_bids(user_id=st.session_state["user_id"])
 
         for bid in bids:
             auction = auction_bid_object.get_single_auction(auction_id=bid["auction_id"])
@@ -30,17 +33,21 @@ def show_my_bids():
 
             with col2:
                 if st.button("**Check Bid Status**", key=f"{bid['id']}_"):
-                    bid_status = auction_bid_object.check_bid_status(auction["id"], 1)
+                    bid_status = auction_bid_object.check_bid_status(
+                        auction_id=auction["id"],
+                        bidder_id=st.session_state["user_id"],
+                    )
                     st.write(f"**Bid Status:** {bid_status}")
 
-                st.divider()
+                if auction["status"] == "ACTIVE":
+                    st.divider()
 
-                if st.button("**Withdraw Bid**", key=f"{bid['id']}__"):
-                    auction_bid_object.withdraw_bid(bid["id"])
-                    st.success("Bid withdrawn successfully")
+                    if st.button("**Withdraw Bid**", key=f"{bid['id']}__"):
+                        auction_bid_object.withdraw_bid(bid["id"])
+                        st.success("Bid withdrawn successfully")
 
-                    if st.button("Refresh"):
-                        st.experimental_rerun()
+                        if st.button("Refresh"):
+                            st.experimental_rerun()
 
             st.divider()
 
@@ -50,4 +57,5 @@ def show_my_bids():
 
 
 if __name__ == "__main__":
-    show_my_bids()
+    if st.session_state["authenticated"]:
+        show_my_bids()

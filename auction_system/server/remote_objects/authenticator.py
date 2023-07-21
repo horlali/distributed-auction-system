@@ -38,7 +38,7 @@ class Authenticator(object):
 
         if user:
             if check_password_hash(user.password_hash, password):
-                return user.id
+                return user.id, user.user_type, user.first_name
 
             return False
         return False
