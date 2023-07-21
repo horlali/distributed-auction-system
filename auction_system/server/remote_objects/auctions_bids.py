@@ -138,7 +138,7 @@ class AuctionBidObject(object):
         return "Bid withdrawn successfully"
 
 
-def close_expired_auctions(self):
+def close_expired_auctions():
     auctions = (
         session.query(Auction)
         .filter(Auction.end_time < datetime.now())
