@@ -21,6 +21,7 @@ class UserSchema(SQLAlchemyAutoSchema):
 
     user_type = ma.fields.Enum(UserType)
     created_at = auto_field(load_only=True)
+    password_hash = auto_field(load_only=True)
 
 
 class AuctionSchema(SQLAlchemyAutoSchema):

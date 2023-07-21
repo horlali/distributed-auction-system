@@ -13,25 +13,26 @@ logger = logging.getLogger(__name__)
 
 @Pyro4.expose
 class Authenticator(object):
-    def register(self, email, password, user_type):
+    def register(self, email, password, user_type, first_name, last_name, phone):
         users = session.query(User).filter_by(email=email.lower()).all()
 
         if users:
-            logger.debug("User already exists")
-            raise ValueError("User already exists")
+            return "User already exists"
 
-        if not users:
+        else:
             user = User(
                 email=email.lower(),
                 password_hash=generate_password_hash(password),
                 user_type=UserType(user_type),
+                first_name=first_name,
+                last_name=last_name,
+                phone=phone,
             )
 
             session.add(user)
             session.commit()
-            return user.id, user.token
 
-        return False
+            return user.id, user.user_type, user.first_name
 
     def login(self, email, password):
         user = session.query(User).filter_by(email=email.lower()).first()
