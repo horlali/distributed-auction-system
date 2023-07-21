@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import Pyro4
 
 from auction_system.server.database import session
@@ -13,6 +15,7 @@ class AuctionBidObject(object):
         self.user_schema = UserSchema()
         self.auction_schema = AuctionSchema()
         self.bid_schema = BidSchema()
+        close_expired_auctions()
 
     def create_auction(self, auction_data):
         auction = Auction(
@@ -133,3 +136,19 @@ class AuctionBidObject(object):
         self.session.commit()
 
         return "Bid withdrawn successfully"
+
+
+def close_expired_auctions(self):
+    auctions = (
+        session.query(Auction)
+        .filter(Auction.end_time < datetime.now())
+        .filter_by(status=AuctionStatus.ACTIVE)
+        .all()
+    )
+
+    for auction in auctions:
+        auction.status = AuctionStatus.CLOSED
+
+    session.commit()
+
+    return "Expired auctions closed successfully"
