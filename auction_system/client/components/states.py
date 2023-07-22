@@ -51,7 +51,7 @@ def button_signup():
         email = form.text_input("Email")
         phone = form.text_input("Phone")
         password = form.text_input("Password", type="password")
-        user_type = form.selectbox("User Type", ["seller", "buyer"])
+        user_type = form.selectbox("User Type", ["seller", "bidder"])
 
         if form.form_submit_button(label="Sign Up"):
             try:
