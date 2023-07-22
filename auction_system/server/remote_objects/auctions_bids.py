@@ -114,7 +114,7 @@ class AuctionBidObject(object):
             #     return "There are ties in the bids, please check back later."
 
             if highest_bid.bidder_id == bidder_id:
-                if reserved_price >= highest_bid.amount:
+                if highest_bid.amount >= reserved_price:
                     return "Your bid won this auction and the reserved price is met."
                 else:
                     return "Your bid won this auction but the reserved price is not met."
