@@ -1,3 +1,6 @@
+# Home Page Flow Diagram
+
+```mermaid
 graph TD
     A[Show auctions] --> B{Get all active auctions}
     B -->|Success| C[Display auctions]
@@ -15,3 +18,4 @@ graph TD
     I --> D
     K --> D
     M --> C
+```

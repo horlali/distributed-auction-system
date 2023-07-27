@@ -1,3 +1,6 @@
+# Home Page Flow Diagram
+
+```mermaid
 classDiagram
     class AuctionBidObject {
         -session: Session
@@ -54,3 +57,4 @@ classDiagram
     class BidSchema {
         +dump(bid: Bid or List[Bid], many: bool = False): dict
     }
+```

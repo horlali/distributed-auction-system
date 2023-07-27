@@ -1,3 +1,6 @@
+# ER Diagram
+
+```mermaid
 classDiagram
     class Authenticator {
         -session: Session
@@ -20,3 +23,4 @@ classDiagram
         ADMIN
         USER
     }
+```
