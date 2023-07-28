@@ -1,3 +1,6 @@
+# Auctions and Bids Object - Class Diagram
+
+```mermaid
 classDiagram
     class AuctionBidObject {
         -session: Session
@@ -54,3 +57,12 @@ classDiagram
     class BidSchema {
         +dump(bid: Bid or List[Bid], many: bool = False): dict
     }
+    AuctionBidObject --|> Auction : implements
+    AuctionBidObject --|> Bid : implements
+    AuctionBidObject --> UserSchema : uses
+    AuctionBidObject --> AuctionSchema : uses
+    AuctionBidObject --> BidSchema : uses
+    Bid --> Auction : has
+    Bid --> User : has
+    Auction --> User : has
+```

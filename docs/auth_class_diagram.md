@@ -1,3 +1,6 @@
+# Authenticator Object - Class Diagram
+
+```mermaid
 classDiagram
     class Authenticator {
         -session: Session
@@ -17,6 +20,8 @@ classDiagram
     }
     class UserType {
         <<enumeration>>
-        ADMIN
-        USER
+        SELLER
+        BIDDER
     }
+    Authenticator ..> User : authenticates
+```

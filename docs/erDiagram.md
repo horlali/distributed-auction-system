@@ -1,3 +1,6 @@
+# ER Diagram
+
+```mermaid
 erDiagram
     User ||--o{ Auction : "seller_id"
     Auction ||--|{ Bid : "auction_id"
@@ -32,3 +35,4 @@ erDiagram
         int auction_id
         datetime created_at
     }
+```

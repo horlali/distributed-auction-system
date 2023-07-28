@@ -45,13 +45,21 @@ cp .env.example .env
 
 It is preferable to create and activate a virtual environment before installing the dependencies. You can read more about python virtual environments and how to create and activate it [here](https://realpython.com/python-virtual-environments-a-primer/)
 
-Since poetry is used for dependency management, you need to have it installed first. You can read more about poetry and how to install it [here](https://python-poetry.org/docs/#installation). Or you can install it with the command below (Although not recommended).
+Since poetry is used for dependency management, you need to have it installed first. You can read more about poetry and how to install it [here](https://python-poetry.org/docs/#installation). Or you can install it with the command below.
+
+WSL, Linux or MacOS
 
 ```bash
-pip install poetry
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-Once poetry is installed, run the command below to install the dependencies
+Windows
+
+```bash
+(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+```
+
+Once poetry is installed, run the command below in your activated environment to install the dependencies
 
 ```bash
 poetry install
@@ -76,3 +84,31 @@ whilst the server is running open another terminal and run the client script
 ```bash
 ./scripts/run-client.sh
 ```
+
+The above command runs the apps on localhost:8501
+
+## Sample Screenshots
+
+Visiting the localhost:8501 in the browser will show the following page
+![Alt text](/docs/screenshots/login.png)
+
+After logging in or signing up, the following page will be shown
+![Alt text](docs/screenshots/home_page.png)
+
+## Application Architecture
+
+### Database Architecture
+
+[Database ER Diagram](/docs/erDiagram.md)
+
+### Auctions and Bid Object Architecture
+
+[Auctions and Bids Class Diagram](/docs/auctions_class_diagram.md)
+
+### Authtenticator Architecture
+
+[Authenticator Class Diagram](/docs/auth_class_diagram.md)
+
+### Home Page Flow Architecture
+
+[Home Page Flow Diagram](/docs/home_page_flow.md)
