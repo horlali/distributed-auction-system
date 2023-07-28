@@ -183,3 +183,5 @@ cython_debug/
 
 task.pdf
 obed.ipynb
+*.key
+*.pem

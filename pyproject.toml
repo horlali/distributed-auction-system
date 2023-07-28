@@ -15,6 +15,7 @@ werkzeug = "^2.3.6"
 sqlalchemy = "^2.0.18"
 marshmallow-sqlalchemy = "^0.29.0"
 watchdog = "^3.0.0"
+cryptography = "^41.0.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
