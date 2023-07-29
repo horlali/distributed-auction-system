@@ -52,6 +52,7 @@ def button_signup():
         phone = form.text_input("Phone")
         password = form.text_input("Password", type="password")
         user_type = form.selectbox("User Type", ["seller", "bidder"])
+        terms_and_condition = form.checkbox("Terms and Conditions")
 
         if form.form_submit_button(label="Sign Up"):
             try:
@@ -63,12 +64,19 @@ def button_signup():
                     "password": password,
                     "user_type": user_type,
                 }
-                user_id, user_option, fname = auth_object.register(**user_data)
-                st.session_state["user_id"] = user_id
-                st.session_state["first_name"] = fname
-                st.session_state["user_type"] = user_option
-                st.session_state["authenticated"] = True
-                st.experimental_rerun()
+
+                if not terms_and_condition:
+                    st.error(
+                        "You need to accept the term and conditions before using the system"
+                    )
+
+                else:
+                    user_id, user_option, fname = auth_object.register(**user_data)
+                    st.session_state["user_id"] = user_id
+                    st.session_state["first_name"] = fname
+                    st.session_state["user_type"] = user_option
+                    st.session_state["authenticated"] = True
+                    st.experimental_rerun()
 
             except TypeError:
                 st.error("Error signing up. Please try again.")
